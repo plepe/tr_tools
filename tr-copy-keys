@@ -1,0 +1,36 @@
+#!/usr/bin/env python
+import tr_tools
+import argparse
+
+parser = argparse.ArgumentParser(description='Copy all or specified keys from one directory of translations to another directory')
+
+parser.add_argument('keys', type=str, nargs='*',
+    help='List of keys to copy (default: all)')
+
+parser.add_argument('-d', '--directory', dest='directory',
+    default='.',
+    help='Path to source translation directory (default: current directory)')
+
+parser.add_argument('-D', '--destination', dest='destination',
+    required=True,
+    help='Path to destination translation directory.')
+
+args = parser.parse_args()
+
+src_data = tr_tools.load_directory(args.directory)
+dest_data = tr_tools.load_directory(args.destination)
+
+for lang, trans in src_data.items():
+    if not lang in dest_data:
+        dest_data[lang] = {}
+
+    if len(args.keys) == 0:
+        keys = trans
+    else:
+        keys = args.keys
+
+    for k in keys:
+        if k in trans:
+            dest_data[lang][k] = trans[k]
+
+tr_tools.save_directory(args.destination, dest_data)
