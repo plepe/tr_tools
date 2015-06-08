@@ -12,5 +12,5 @@ setup(
     packages = find_packages(),
     package_data = {
     },
-    scripts = [ ],
+    scripts = [ 'tr-rename-key' ],
 )

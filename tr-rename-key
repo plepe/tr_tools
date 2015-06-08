@@ -1,0 +1,24 @@
+#!/usr/bin/env python
+import tr_tools
+import argparse
+
+parser = argparse.ArgumentParser(description='In a directory of translations, renames a specific key')
+
+parser.add_argument('from_key', type=str, help='source key')
+
+parser.add_argument('to_key', type=str, help='destination key')
+
+parser.add_argument('-d', '--directory', dest='directory',
+    default='.',
+    help='Path to translation directory (default: current directory)')
+
+args = parser.parse_args()
+
+data = tr_tools.load_directory(args.directory)
+
+for lang, trans in data.items():
+    if args.from_key in trans:
+        trans[args.to_key] = trans[args.from_key]
+        del trans[args.from_key]
+
+tr_tools.save_directory(args.directory, data)
