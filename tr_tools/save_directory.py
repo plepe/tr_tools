@@ -5,6 +5,6 @@ def save_directory(path, data):
         json.dump(
             trans,
             open(path + '/' + lang + '.json', 'w'),
-            indent=2,
+            indent=4,
             sort_keys=True
         )
