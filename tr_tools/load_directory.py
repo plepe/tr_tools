@@ -8,6 +8,10 @@ def load_directory(path):
     for f in os.listdir(path):
         m = re.match('^(.*)\.json$', f)
         if m:
-            ret[m.group(1)] = json.load(open(path + '/' + f))
+            lang = m.group(1)
+            try:
+                ret[lang] = json.load(open(path + '/' + f))
+            except ValueError as e:
+                print('Warning: Can\'t load translation {}: {}'.format(lang, e))
 
     return ret
