@@ -1,0 +1,4 @@
+*.pyc
+/build/
+/dist/
+/tr_tools.egg-info/
